@@ -8,7 +8,7 @@ export default function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
     });
@@ -16,19 +16,38 @@ export default function Signup() {
     if (error) {
       setMessage(error.message);
     } else {
-      setMessage('Check your inbox to confirm your email!');
+      setMessage('✅ Check your email to confirm your registration.');
     }
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Sign Up</h2>
+    <div style={{ maxWidth: '400px', margin: 'auto', padding: '2rem' }}>
+      <h2>Δημιουργία Λογαριασμού</h2>
       <form onSubmit={handleSignup}>
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required /><br />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required /><br />
-        <button type="submit">Sign Up</button>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          required
+          onChange={(e) => setEmail(e.target.value)}
+          style={{ display: 'block', marginBottom: '1rem', width: '100%' }}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          required
+          onChange={(e) => setPassword(e.target.value)}
+          style={{ display: 'block', marginBottom: '1rem', width: '100%' }}
+        />
+        <button
+          type="submit"
+          style={{ padding: '0.5rem 1rem' }}
+        >
+          Εγγραφή
+        </button>
       </form>
-      <p>{message}</p>
+      {message && <p style={{ marginTop: '1rem' }}>{message}</p>}
     </div>
   );
 }
