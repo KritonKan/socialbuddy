@@ -8,15 +8,20 @@ export default function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const { error } = await supabase.auth.signUp({
+
+    console.log("Attempting signup with:", email, password);
+
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
 
+    console.log("Supabase response:", { data, error });
+
     if (error) {
-      setMessage(error.message);
-    } else {
-      setMessage('✅ Check your email to confirm your registration.');
+      setMessage("Error: " + error.message);
+    } else if (data) {
+      setMessage("Success! Check your email to confirm.");
     }
   };
 
